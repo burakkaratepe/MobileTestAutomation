@@ -76,20 +76,26 @@ public class DriverSetUp {
         return message;
     }
 
-    public static void getDeviceNameProperty(String platformName){
-                String s;
-                String command;
-                Process p;
-                try {
-                    command = platformName.equals("Android") ? "adb shell getprop ro.product.model" : "instruments -s devices";
-                    p = Runtime.getRuntime().exec(command);
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader(p.getInputStream()));
-                    while ((s = br.readLine()) != null)
-                        System.out.println("line: " + s);
-                    p.waitFor();
-                    System.out.println ("exit: " + p.exitValue());
-                    p.destroy();
-                } catch (Exception e) {}
+    public static String getDeviceID(String platformName){
+        String s;
+        String command;
+        Process p;
+        try {
+            command = platformName.equals("Android") ? "adb devices" : "instruments -s devices";
+            p = Runtime.getRuntime().exec(command);
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while ((s = br.readLine()) != null) {
+                if (!s.contains("Simulator") && s.contains("(")){
+                    System.out.println(s.substring(s.indexOf("[") + 1, s.indexOf("]")));
+                }else if(!(s.contains("attached"))){
+                    System.out.println(s.replace("device","").trim());
+                }
+            }
+            p.waitFor();
+            p.destroy();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+                return null;
         }
 }

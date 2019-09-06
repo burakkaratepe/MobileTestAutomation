@@ -39,5 +39,3 @@ public enum Elements {
         return driver == null ? "" : driver instanceof AndroidDriver ? androidId : iOSId;
     }
 }
-
-//}

@@ -22,8 +22,8 @@ public class ActionUtils {
 
     public static HashMap<String, String> otpUrls = new HashMap<String, String>() {
         {
-            put("5393012535", "XX");
-            put("5071685971", "XX");
+            put("Mssidn1", "OtpGeneratorLink1");
+            put("Mssidn2", "OtpGeneratorLink2");
         }
     };
 
